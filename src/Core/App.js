@@ -8,18 +8,12 @@ export default class App {
 
         const
             _defaults = {
-                services: Object,
-                trackEvents: true,
-                identifyUser: false,
-                userId: null,
-                anonymise: true
+                services: {},
+                enabled: true
             },
             _spec = {
-                services: Object,
-                trackEvents: Boolean,
-                identifyUser: Boolean,
-                userId: Number,
-                anonymise: Boolean
+                services: "object",
+                enabled: "boolean"
             };
 
         this._config = new ConfigStore(config, _defaults, _spec);
@@ -64,6 +58,23 @@ export default class App {
     }
 
     /**
+     * identify user
+     * @param id
+     * @returns {*}
+     */
+    identifyUser(id) {
+        return this.service('identifyUser', [id])
+    }
+
+    /**
+     * identify user
+     * @returns {*}
+     */
+    anonymize() {
+        return this.service('anonymize')
+    }
+
+    /**
      * Execute services commands
      *
      * @param func
@@ -73,21 +84,22 @@ export default class App {
     service(func, args) {
 
         const config = this.config(),
-            canTrack = config.get('canTrack'),
-            results = [];
+            enabled = config.get('enabled'),
+            services = config.get('services'),
+            results = {};
 
-        if (false === !!canTrack) {
+        if (!enabled) {
             return results;
         }
 
-        for (let service of config.get('services')) {
-            results.push(_execute(service));
+        for (let service in services) {
+            results[service] = _execute(services[service]);
         }
 
         return results;
 
         function _execute(service) {
-            if (service.hasOwnProperty(func)) {
+            if (!service.hasOwnProperty(func)) {
                 return false;
             }
 

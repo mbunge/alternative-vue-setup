@@ -15,7 +15,7 @@ describe('App instance', () => {
 
     const app = new window.AnalyticsToolKit.App({
         services: {
-            'test': TestService
+            test: TestService('my-api-key')
         }
     });
 
@@ -24,8 +24,31 @@ describe('App instance', () => {
     });
 
     it('should have a test service', () => {
-        console.log('Services', app.config().get('services'));
-        expect(app.config().get('services').test).toBeDefined()
-        expect(typeof app.config().get('services').test).toEqual('object')
-    })
+        expect(app.config().get('services').test).toBeDefined();
+        expect(typeof app.config().get('services').test).toEqual('object');
+    });
+
+    it('should track event', () => {
+        const data = {category: 'unit', action: 'test'},
+            resultdata = data;
+
+        resultdata.label = null;
+        resultdata.value = null;
+
+        expect(app.trackEvent(data)).toEqual({test: resultdata});
+    });
+
+    it('should track page view', () => {
+        const data = "/index";
+        expect(app.trackPageview(data)).toEqual({test: data});
+    });
+
+    it('should assign user id', () => {
+        const data = 42;
+        expect(app.identifyUser(data)).toEqual({test: data});
+    });
+
+    it('should anonymize client', () => {
+        expect(app.anonymize()).toEqual({test: true});
+    });
 });

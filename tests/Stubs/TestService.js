@@ -1,24 +1,24 @@
 import Service from '../../src/Services/Service'
 
-export default (() => {
+export default (apiKey) => {
 
     const service = new Service({
         trackEvent(data){
-            return 7;
+            return data;
         },
-        trackPageView(data){
-            return 13;
+        trackPageview(data){
+            return data;
         },
         identifyUser(userId){
-            return 23;
+            return userId;
         },
-        initialize(apiKey){
-            return 42;
+        initialize(){
+            return apiKey;
         },
         anonymize(){
-            return 1337
+            return true;
         }
     });
 
     return service.instance();
-})();
+};

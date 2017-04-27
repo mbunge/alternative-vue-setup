@@ -1,18 +1,19 @@
-import 'Service'
+import Service from './Service'
 
 export default (() => {
-    const _service = ga;
 
-    if(_service === typeof "undefined"){
+    if(!window.hasOwnProperty('ga')){
         return new Service();
     }
 
+    const _service = window['ga'];
+
     let service = new Service({
-        trackEvent(data, options){
-            _service('send', 'event', data.category, data.action, data.label, data.value, options);
+        trackEvent(data){
+            _service('send', 'event', data.category, data.action, data.label, data.value);
         },
-        trackPageView(data, options){
-            _service('send', 'pageview', data.page, options)
+        trackPageView(data){
+            _service('send', 'pageview', data.page)
         },
         identifyUser(userId){
             _service('set', 'userId', userId);
@@ -24,5 +25,6 @@ export default (() => {
             _service('set', 'anonymizeIp', true);
         }
     });
+
     return service.instance();
 })();

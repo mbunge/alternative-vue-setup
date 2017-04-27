@@ -5,11 +5,11 @@ export default class ConfigStore {
 
     constructor(config, defaults = {}, spec = {}) {
 
-        const _config = Object.assign(config, defaults);
+        const _config = Object.assign(defaults, config);
 
         this._spec = spec;
 
-        for(let key in _config){
+        for (let key in _config) {
             this.set(key, _config[key])
         }
     }
@@ -20,18 +20,23 @@ export default class ConfigStore {
             : _default;
     }
 
-    set(key, value){
-        let condition = true;
+    set(key, value) {
 
-        if(this._spec.hasOwnProperty(key)){
-            condition = typeof value === typeof this._spec[key];
-        }
-
-        if(!condition){
-            throw new Error('Value of '+ key +' is not valid! Expect ' + typeof this._spec[key]);
-        }
-
+        this.checkType(key, value);
         this._config[key] = value;
+    }
+
+    checkType(key, value) {
+        if (!this._spec.hasOwnProperty(key)) {
+            // always true if not exists
+            return true;
+        }
+        let actualType = typeof value;
+        let expectedType = this._spec[key];
+
+        if (actualType !== expectedType) {
+            throw new Error('Value of ' + key + ' is not valid! Expect ' + expectedType + ' instead of ' + actualType);
+        }
     }
 
 }

@@ -23,6 +23,6 @@ export default class Service {
     }
 
     instance(){
-        return this.instance;
+        return this._instance;
     }
 }
