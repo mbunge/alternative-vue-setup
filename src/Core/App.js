@@ -93,7 +93,10 @@ export default class App {
         }
 
         for (let service in services) {
-            results[service] = _execute(services[service]);
+            if(!results.hasOwnProperty(service)){
+                results[service] = {};
+            }
+            results[service][func] = _execute(services[service]);
         }
 
         return results;

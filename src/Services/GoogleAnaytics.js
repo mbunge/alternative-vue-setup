@@ -1,6 +1,6 @@
 import Service from './Service'
 
-export default (() => {
+export default (apiKey) => {
 
     if(!window.hasOwnProperty('ga')){
         return new Service();
@@ -10,21 +10,21 @@ export default (() => {
 
     let service = new Service({
         trackEvent(data){
-            _service('send', 'event', data.category, data.action, data.label, data.value);
+            return _service('send', 'event', data.category, data.action, data.label, data.value);
         },
-        trackPageView(data){
-            _service('send', 'pageview', data.page)
+        trackPageview(page){
+            return _service('send', 'pageview', page)
         },
         identifyUser(userId){
-            _service('set', 'userId', userId);
+            return _service('set', 'userId', userId);
         },
-        initialize(apiKey){
-            _service('create', apiKey, 'auto');
+        initialize(){
+            return _service('create', apiKey, 'auto');
         },
         anonymize(){
-            _service('set', 'anonymizeIp', true);
+            return _service('set', 'anonymizeIp', true);
         }
     });
 
     return service.instance();
-})();
+};
