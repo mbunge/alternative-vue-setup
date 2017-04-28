@@ -75,7 +75,7 @@ export default class App {
     }
 
     /**
-     * Execute services commands
+     * Execute command bus
      *
      * @param func
      * @param args

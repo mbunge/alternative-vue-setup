@@ -17,6 +17,9 @@ export default (apiKey) => {
         },
         anonymize(){
             return true;
+        },
+        custom(val){
+            return val;
         }
     });
 

@@ -51,4 +51,9 @@ describe('App instance', () => {
     it('should anonymize client', () => {
         expect(app.anonymize()).toEqual({test: true});
     });
+
+    it('should call custom command', () => {
+        const data = "custom-value";
+        expect(app.service('custom', [data])).toEqual({test: data});
+    });
 });
