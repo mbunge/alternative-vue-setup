@@ -1,30 +1,32 @@
 import Service from './Service'
 
-export default (() => {
+export default () => {
 
-    if(!window.hasOwnProperty('ga')){
-        return new Service();
+    let exists = false;
+
+    exists = window.hasOwnProperty('amplitude');
+
+    if(exists){
+        exists = window.amplitude.hasOwnProperty('getInstance');
     }
 
-    const _service = window['ga'];
+    if(exists){
+        return (new Service()).instance();
+    }
+
+    const _service = window['amplitude'].getInstance();
 
     let service = new Service({
         trackEvent(data){
-            _service('send', 'event', data.category, data.action, data.label, data.value);
-        },
-        trackPageView(data){
-            _service('send', 'pageview', data.page)
+            return _service.logEvent(data.category + " " + data.action)
         },
         identifyUser(userId){
-            _service('set', 'userId', userId);
+            return _service('set', 'userId', userId);
         },
         initialize(apiKey){
-            _service('create', apiKey, 'auto');
-        },
-        anonymize(){
-            _service('set', 'anonymizeIp', true);
+            return _service.init(apiKey)
         }
     });
 
     return service.instance();
-})();
+};
