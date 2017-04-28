@@ -1,8 +1,9 @@
 module.exports = {
 
-    // ES6
+    // js
     js: {
         src: './src',
-        dist: './dist'
+        dist: './dist',
+        distName: 'analyticsToolKit.min.js'
     }
 };

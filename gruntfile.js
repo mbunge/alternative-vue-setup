@@ -12,6 +12,6 @@ module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
 
     grunt.registerTask('prod', ['test', 'browserify:production']);
-    grunt.registerTask('dev', ['browserify:development']);
+    grunt.registerTask('default', ['browserify:development']);
     grunt.registerTask('test', ['karma']);
 };

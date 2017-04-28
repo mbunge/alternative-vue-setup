@@ -1,7 +1,7 @@
 module.exports = {
     development: {
         files: {
-            '<%= options.es6.dist %>/es6.min.js': "<%= options.es6.src %>/**/*.js"
+            '<%= options.js.dist %>/js.min.js': "<%= options.js.src %>/**/*.js"
         },
         options: {
             debug: true,
@@ -11,7 +11,7 @@ module.exports = {
     },
     production: {
         files: {
-            '<%= options.es6.dist %>/es6.min.js': "<%= options.es6.src %>/**/*.js"
+            '<%= options.js.dist %>/<%= options.js.distName %>': "<%= options.js.src %>/**/*.js"
         },
         options: {
             debug: true,
