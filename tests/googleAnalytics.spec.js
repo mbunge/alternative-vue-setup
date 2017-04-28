@@ -1,5 +1,5 @@
 import '../src';
-import ga from './Stubs/dummy'
+import ga from './Stubs/ga'
 
 // fake window
 window.ga = ga;
@@ -10,10 +10,6 @@ describe('Google Analytics', () => {
         expect(window.AnalyticsToolKit.Services.GoogleAnalytics).toBeDefined();
         expect(typeof window.AnalyticsToolKit.Services.GoogleAnalytics).toEqual('function');
     });
-
-});
-
-describe('App instance', () => {
 
     const app = new window.AnalyticsToolKit.App({
         services: {

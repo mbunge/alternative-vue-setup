@@ -10,7 +10,7 @@ export default () => {
         exists = window.amplitude.hasOwnProperty('getInstance');
     }
 
-    if(exists){
+    if(!exists){
         return (new Service()).instance();
     }
 
@@ -21,7 +21,7 @@ export default () => {
             return _service.logEvent(data.category + " " + data.action)
         },
         identifyUser(userId){
-            return _service('set', 'userId', userId);
+            return _service.setUserId(userId);
         },
         initialize(apiKey){
             return _service.init(apiKey)
